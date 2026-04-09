@@ -1,0 +1,81 @@
+{
+  "name": "@dariyd/react-native-pdf-page-image",
+  "title": "React Native PDF Page Image",
+  "version": "1.0.0",
+  "description": "Render PDF pages to PNG images in React Native. Built for New Architecture (TurboModules + Codegen). Uses PDFKit on iOS and PdfRenderer on Android.",
+  "main": "src/index",
+  "types": "src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "README.md",
+    "src",
+    "ios",
+    "android",
+    "react-native-pdf-page-image.podspec"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "echo \"✅ Installing dependencies...\"",
+    "prepublishOnly": "echo \"📦 Preparing package for publishing...\" && npm pack --dry-run",
+    "postpublish": "echo \"🎉 Published successfully! Don't forget to: git push && git push --tags\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dariyd/react-native-pdf-page-image.git",
+    "baseUrl": "https://github.com/dariyd/react-native-pdf-page-image"
+  },
+  "keywords": [
+    "react-native",
+    "react native",
+    "pdf",
+    "pdf-to-image",
+    "pdf to image",
+    "pdf-thumbnail",
+    "pdf thumbnail",
+    "pdf-renderer",
+    "pdf renderer",
+    "pdfkit",
+    "pdf page",
+    "render pdf",
+    "image",
+    "thumbnail",
+    "turbomodules",
+    "turbo module",
+    "new-architecture",
+    "new architecture",
+    "fabric",
+    "codegen",
+    "ios",
+    "android",
+    "react-native-module",
+    "react-native-library"
+  ],
+  "author": {
+    "name": "Dariy D",
+    "email": "dariyd.soft@gmail.com"
+  },
+  "homepage": "https://github.com/dariyd/react-native-pdf-page-image#readme",
+  "bugs": {
+    "url": "https://github.com/dariyd/react-native-pdf-page-image/issues"
+  },
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.76.0"
+  },
+  "devDependencies": {
+    "react": "^19.0.0",
+    "react-native": "^0.83.1"
+  },
+  "codegenConfig": {
+    "name": "RNPdfPageImageSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.pdfpageimage"
+    }
+  }
+}
