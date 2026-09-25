@@ -2,6 +2,12 @@ import { TurboModuleRegistry } from 'react-native';
 
 const NativePdfPageImage = TurboModuleRegistry.getEnforcing('PdfPageImage');
 
+const normalizeCompressOptions = (options) => ({
+  dpi: Math.min(300, Math.max(50, Math.round(options?.dpi ?? 150))),
+  quality: Math.min(100, Math.max(1, Math.round(options?.quality ?? 70))),
+  maxDimension: Math.max(0, Math.round(options?.maxDimension ?? 2200)),
+});
+
 const clampScale = (scale) =>
   Math.min(10, Math.max(0.1, scale ?? 1.0));
 
@@ -31,6 +37,10 @@ export class PdfPageImage {
       clampScale(scale),
       normalizeOptions(options),
     );
+  }
+
+  static async compress(uri, options) {
+    return NativePdfPageImage.compress(uri, normalizeCompressOptions(options));
   }
 
   static async close(uri) {

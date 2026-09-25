@@ -24,6 +24,23 @@ export type GenerateOptions = {
   maxDimension?: number;
 };
 
+export type CompressOptions = {
+  /** Resolution of the re-encoded pages. Default 150 (sharp on screen and in print), range 50–300. */
+  dpi?: number;
+  /** JPEG quality 1–100. Default 70. */
+  quality?: number;
+  /** Cap the long edge of each page image in pixels. Default 2200; 0 = no cap. */
+  maxDimension?: number;
+};
+
+export type CompressResult = {
+  /** file:// URI of the new PDF in the temp/cache directory. */
+  uri: string;
+  pageCount: number;
+  originalBytes: number;
+  bytes: number;
+};
+
 export declare class PdfPageImage {
   /**
    * Opens a PDF and returns page count.
@@ -56,6 +73,12 @@ export declare class PdfPageImage {
     scale?: number,
     options?: GenerateOptions,
   ): Promise<PageImage[]>;
+
+  /**
+   * Write a smaller copy of a PDF: every page re-encoded as a JPEG (text is
+   * no longer selectable). The original is untouched.
+   */
+  static compress(uri: string, options?: CompressOptions): Promise<CompressResult>;
 
   /**
    * Closes the PDF and deletes temporary image files.

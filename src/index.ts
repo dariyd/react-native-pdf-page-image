@@ -26,6 +26,29 @@ export type GenerateOptions = {
   maxDimension?: number;
 };
 
+export type CompressOptions = {
+  /** Resolution of the re-encoded pages. Default 150 (sharp on screen and in print), range 50–300. */
+  dpi?: number;
+  /** JPEG quality 1–100. Default 70. */
+  quality?: number;
+  /** Cap the long edge of each page image in pixels. Default 2200; 0 = no cap. */
+  maxDimension?: number;
+};
+
+export type CompressResult = {
+  /** file:// URI of the new PDF in the temp/cache directory. */
+  uri: string;
+  pageCount: number;
+  originalBytes: number;
+  bytes: number;
+};
+
+const normalizeCompressOptions = (options?: CompressOptions) => ({
+  dpi: Math.min(300, Math.max(50, Math.round(options?.dpi ?? 150))),
+  quality: Math.min(100, Math.max(1, Math.round(options?.quality ?? 70))),
+  maxDimension: Math.max(0, Math.round(options?.maxDimension ?? 2200)),
+});
+
 const clampScale = (scale?: number): number =>
   Math.min(10, Math.max(0.1, scale ?? 1.0));
 
@@ -64,6 +87,16 @@ export class PdfPageImage {
       clampScale(scale),
       normalizeOptions(options),
     );
+  }
+
+  /**
+   * Write a smaller copy of a PDF: every page re-encoded as a JPEG. Page
+   * sizes are kept; text becomes part of the image (no longer selectable).
+   * The original is untouched — compare `bytes` with `originalBytes` and
+   * keep the copy only if it is smaller.
+   */
+  static async compress(uri: string, options?: CompressOptions): Promise<CompressResult> {
+    return NativePdfPageImage.compress(uri, normalizeCompressOptions(options));
   }
 
   static async close(uri: string): Promise<void> {

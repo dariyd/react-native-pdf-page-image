@@ -29,6 +29,19 @@ No additional setup required — auto-linked via Gradle.
 - iOS **15.0+**
 - Android API **24+**
 
+## What's new in 2.1
+
+- **`PdfPageImage.compress(uri, options?)`** — writes a smaller copy of a PDF with every page re-encoded as a JPEG (default 150 dpi, quality 70). Page sizes are kept; text becomes part of the page image. Works page by page on a background thread, so long scans don't spike memory. On Android the JPEGs are embedded directly (the system `PdfDocument` would store them uncompressed).
+
+```typescript
+const result = await PdfPageImage.compress('file:///path/to/scan.pdf', { dpi: 150, quality: 70 });
+if (result.bytes < result.originalBytes * 0.8) {
+  // keep result.uri (a file:// in the temp/cache directory)
+}
+```
+
+Best for scans and photos. A PDF made of text (an emailed invoice) may come out larger — always compare `bytes` with `originalBytes`.
+
 ## What changed in 2.0
 
 - **JPEG output by default** (`quality: 80`) — ~10–20× smaller than PNG for scanned/photographic pages. Pass `{ format: 'png' }` for the old behavior.

@@ -20,6 +20,19 @@ type NativeGenerateOptions = {
   maxDimension: number; // long-edge cap in px; 0 = no cap
 };
 
+type NativeCompressOptions = {
+  dpi: number; // 50–300
+  quality: number; // JPEG 1–100
+  maxDimension: number; // long-edge cap in px; 0 = no cap
+};
+
+type CompressResult = {
+  uri: string;
+  pageCount: number;
+  originalBytes: number;
+  bytes: number;
+};
+
 export interface Spec extends TurboModule {
   openPdf(uri: string): Promise<PdfInfo>;
   generate(
@@ -33,6 +46,7 @@ export interface Spec extends TurboModule {
     scale: number,
     options: NativeGenerateOptions,
   ): Promise<PageImage[]>;
+  compress(uri: string, options: NativeCompressOptions): Promise<CompressResult>;
   closePdf(uri: string): Promise<void>;
 }
 
